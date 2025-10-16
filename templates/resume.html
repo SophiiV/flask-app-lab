@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="text-center">
+    <img src="{{ url_for('static', filename='images/photo.jpg') }}" alt="Фото" class="rounded-circle" width="150">
+    <h1 class="mt-3">Василюк Софія</h1>
+    <p>Майже девелопер</p>
+</section>
+
+<section>
+    <h2>Про себе</h2>
+    <p>Я студент(ка) спеціальності «Інженерія програмного забезпечення». Цікавлюсь веб-розробкою на Python і JavaScript.
+    </p>
+</section>
+
+<section>
+    <h2>Освіта</h2>
+    <p>Карпатський національний університет імені Василя Стефаника, Факультет математики та інформатики (3 курс)</p>
+</section>
+
+<section>
+    <h2>Навички</h2>
+    <ul>
+        <li>Python, Flask</li>
+        <li>HTML, CSS, Bootstrap</li>
+        <li>Git, GitHub</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Проєкти</h2>
+    <p>Розробка невеликого сайту на Flask як навчальний проєкт.</p>
+</section>
+{% endblock %}
