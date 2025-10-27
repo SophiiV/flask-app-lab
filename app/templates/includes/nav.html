@@ -1,17 +1,29 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="{{ url_for('main.index') }}">Flask Labs</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div id="mainNav" class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div id="navbarNav" class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
                 <li class="nav-item"><a class="nav-link" href="{{ url_for('main.resume') }}">Резюме</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url_for('main.contacts') }}">Контакти</a></li>
                 <li class="nav-item"><a class="nav-link"
                         href="{{ url_for('users.greetings', name='Sofia', age=19) }}">Users → Hi</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ url_for('products.list_products') }}">Products</a>
                 </li>
+            </ul>
+            <ul class="navbar-nav">
+                {% if session.get('user') %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('users.profile') }}">Профіль</a></li>
+                <li class="nav-item">
+                    <form action="{{ url_for('users.logout') }}" method="post" class="d-inline">
+                        <button class="btn btn-sm btn-outline-light">Вийти</button>
+                    </form>
+                </li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('users.login') }}">Увійти</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>

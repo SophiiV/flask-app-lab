@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Вхід{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="max-width: 640px;">
+    <h1 class="mb-3">Увійти</h1>
+    <form method="post" class="card card-body">
+        <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input name="username" class="form-control" placeholder="sofia" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Пароль</label>
+            <input type="password" name="password" class="form-control" placeholder="1234" required>
+        </div>
+        <button class="btn btn-primary">Увійти</button>
+    </form>
+</div>
+{% endblock %}

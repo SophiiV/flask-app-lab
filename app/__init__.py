@@ -4,7 +4,10 @@ def create_app():
     app = Flask(__name__, template_folder="templates", static_folder="static")
     app.config["SECRET_KEY"] = "dev-secret-key"
 
-    # Імпорт та реєстрація блюпринтів
+    # Заглушки для логіну (можеш змінити)
+    app.config["LOGIN_USER"] = "sofia"
+    app.config["LOGIN_PASSWORD"] = "1234"
+
     from .views import main_bp
     app.register_blueprint(main_bp)
 
@@ -13,6 +16,8 @@ def create_app():
 
     from .products.views import products_bp
     app.register_blueprint(products_bp, url_prefix="/products")
+
+    
 
     return app
 
