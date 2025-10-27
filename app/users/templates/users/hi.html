@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row">
+    <aside class="col-12 col-md-3 mb-3">
+        <!-- Вертикальне меню лише для цієї сторінки -->
+        <div class="list-group">
+            <a class="list-group-item list-group-item-action" href="{{ url_for('main.index') }}">Головна</a>
+            <a class="list-group-item list-group-item-action" href="{{ url_for('main.resume') }}">Резюме</a>
+            <a class="list-group-item list-group-item-action" href="{{ url_for('main.contacts') }}">Контакти</a>
+            <a class="list-group-item list-group-item-action" href="{{ url_for('users.admin') }}">Admin → redirect</a>
+        </div>
+    </aside>
+    <section class="col-12 col-md-9">
+        <h2>Вітання</h2>
+        <p>Ім’я: <strong>{{ name.upper() }}</strong></p>
+        {% if age is not none %}
+        <p>Вік: <strong>{{ age }}</strong></p>
+        {% else %}
+        <p class="text-muted">Вік не задано (?age=...)</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

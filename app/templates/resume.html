@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Моє резюме{% endblock %}
+
+{% block content %}
+<section class="mb-4">
+    <h1 class="display-5 fw-bold">Моє резюме</h1>
+</section>
+
+<section class="mb-4">
+    <h2 class="h4">Про себе</h2>
+    <p>Привіт! Мене звати Софія. Я студентка 3 курсу спеціальності «Інженерія програмного забезпечення».
+        Мені 19 років, я люблю писати код на Python, працювати з Flask і створювати веб-застосунки.</p>
+    <img alt="Фото" class="img-fluid rounded shadow-sm my-2"
+        src="{{ url_for('static', filename='images/profile.jpg') }}">
+</section>
+
+<section class="mb-4">
+    <h2 class="h4">Освіта</h2>
+    <ul>
+        <li>ПНУ ім. Василя Стефаника — бакалавр, ПЗ (2022 – теперішній час)</li>
+    </ul>
+</section>
+
+<section class="mb-4">
+    <h2 class="h4">Навички</h2>
+    <ul>
+        <li>Python, JavaScript</li>
+        <li>Flask, HTML, CSS, Bootstrap</li>
+        <li>Git, VS Code, MySQL</li>
+    </ul>
+</section>
+
+<section class="mb-4">
+    <h2 class="h4">Технології</h2>
+    <p>Flask, Python, HTML, CSS, Bootstrap, Git, Jinja2, unittest</p>
+</section>
+
+<section class="mb-4">
+    <h2 class="h4">Проєкти</h2>
+    <ul>
+        <li>Flask-сайт із Blueprints (Users, Products)</li>
+        <li>Сторінка «Контакти» з формою-заглушкою</li>
+        <li>Тестування за допомогою unittest</li>
+    </ul>
+</section>
+{% endblock %}

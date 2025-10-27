@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<dl class="row">
+    <dt class="col-sm-3">ID</dt>
+    <dd class="col-sm-9">{{ product.id }}</dd>
+    <dt class="col-sm-3">Name</dt>
+    <dd class="col-sm-9">{{ product.name }}</dd>
+    <dt class="col-sm-3">Price</dt>
+    <dd class="col-sm-9">{{ "%.2f"|format(product.price) }}</dd>
+</dl>
+<a class="btn btn-secondary" href="{{ url_for('products.list_products') }}">← Back</a>
+{% endblock %}

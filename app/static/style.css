@@ -15,3 +15,13 @@ section {
 img {
     border: 3px solid #6c757d;
 }
+
+
+body {
+    line-height: 1.6;
+}
+
+section+section {
+    border-top: 1px solid #e9ecef;
+    padding-top: 1rem;
+}
