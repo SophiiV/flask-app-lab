@@ -40,8 +40,10 @@
     <div class="d-flex align-items-center justify-content-between mb-3">
         <h1 class="mb-0">Профіль</h1>
         <div class="btn-group">
-            <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('users.set_theme', mode='light') }}">Light</a>
-            <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('users.set_theme', mode='dark') }}">Dark</a>
+            <a class="btn btn-sm btn-outline-secondary"
+               href="{{ url_for('users.set_theme', mode='light') }}">Light</a>
+            <a class="btn btn-sm btn-outline-secondary"
+               href="{{ url_for('users.set_theme', mode='dark') }}">Dark</a>
         </div>
     </div>
 
@@ -51,37 +53,52 @@
     </div>
 
     <div class="row g-4">
+        <!-- ДОДАТИ КУКІ -->
         <div class="col-md-6">
             <div class="profile-card">
                 <h5>Додати кукі</h5>
                 <form method="post" action="{{ url_for('users.add_cookie') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
                     <div class="mb-2">
                         <label class="form-label">Key</label>
                         <input name="key" class="form-control" placeholder="mykey" required>
                     </div>
+
                     <div class="mb-2">
                         <label class="form-label">Value</label>
                         <input name="value" class="form-control" placeholder="myvalue">
                     </div>
+
                     <div class="mb-3">
                         <label class="form-label">Термін дії (хв)</label>
                         <input name="ttl" type="number" min="1" value="60" class="form-control">
                     </div>
+
                     <button class="btn btn-success">Додати</button>
                 </form>
             </div>
         </div>
 
+        <!-- ВИДАЛИТИ КУКІ -->
         <div class="col-md-6">
             <div class="profile-card">
                 <h5>Видалити кукі</h5>
+
+                <!-- Видалення за ключем -->
                 <form method="post" action="{{ url_for('users.delete_cookie') }}" class="mb-2">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
                     <div class="input-group">
                         <input name="key" class="form-control" placeholder="ключ (необов'язково)">
                         <button class="btn btn-danger">Видалити за ключем</button>
                     </div>
                 </form>
+
+                <!-- Видалити всі кукі -->
                 <form method="post" action="{{ url_for('users.delete_cookie') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
                     <input type="hidden" name="key" value="">
                     <button class="btn btn-outline-danger">Видалити всі</button>
                 </form>

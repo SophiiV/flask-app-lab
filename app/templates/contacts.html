@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% from "includes/_formhelpers.html" import render_field %}
+
+{% block title %}Контакти{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="max-width: 720px;">
+    <h1 class="mb-3">Контактна форма</h1>
+
+    <form method="post" class="card card-body mb-4">
+        {{ form.hidden_tag() }}
+
+        {{ render_field(form.name) }}
+        {{ render_field(form.email) }}
+        {{ render_field(form.message) }}
+
+        <div class="mb-3 form-check">
+            {{ form.agree(class="form-check-input", id="agree") }}
+            <label class="form-check-label" for="agree">
+                Я погоджуюсь з обробкою персональних даних
+            </label>
+        </div>
+
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+
+    {# Пункт 8**: дані з форми у вигляді таблиці разом із формою (після PRG) #}
+    {% if contact_data %}
+    <div class="card card-body">
+        <h2 class="h5 mb-3">Останнє відправлене повідомлення</h2>
+        <div class="table-responsive">
+            <table class="table table-sm">
+                <tbody>
+                    <tr>
+                        <th scope="row">Ім’я</th>
+                        <td>{{ contact_data.name }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Email</th>
+                        <td>{{ contact_data.email }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Повідомлення</th>
+                        <td style="white-space: pre-wrap;">{{ contact_data.message }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Погодження</th>
+                        <td>{{ "Так" if contact_data.agree else "Ні" }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
