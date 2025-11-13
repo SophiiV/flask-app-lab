@@ -1,6 +1,13 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, BooleanField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Email, Length
+from wtforms import (
+    StringField,
+    TextAreaField,
+    BooleanField,
+    PasswordField,
+    SubmitField,
+    SelectField,
+)
+from wtforms.validators import DataRequired, Email, Length, Regexp
 
 
 class ContactForm(FlaskForm):
@@ -8,7 +15,7 @@ class ContactForm(FlaskForm):
         "Ім’я",
         validators=[
             DataRequired(message="Вкажіть ім’я."),
-            Length(max=50, message="Ім’я занадто довге."),
+            Length(min=4, max=10, message="Ім’я має бути від 4 до 10 символів."),
         ],
     )
     email = StringField(
@@ -16,17 +23,38 @@ class ContactForm(FlaskForm):
         validators=[
             DataRequired(message="Вкажіть email."),
             Email(message="Некоректний формат email."),
-            Length(max=120),
         ],
+    )
+    phone = StringField(
+        "Телефон",
+        validators=[
+            DataRequired(message="Вкажіть номер телефону."),
+            Regexp(
+                r"^\+380\d{9}$",
+                message="Формат телефону має бути: +380XXXXXXXXX (9 цифр після коду).",
+            ),
+        ],
+    )
+    subject = SelectField(
+        "Тема",
+        choices=[
+            ("support", "Підтримка"),
+            ("order", "Питання щодо замовлення"),
+            ("feedback", "Відгук"),
+            ("other", "Інше"),
+        ],
+        validators=[DataRequired(message="Оберіть тему звернення.")],
     )
     message = TextAreaField(
         "Повідомлення",
         validators=[
             DataRequired(message="Вкажіть текст повідомлення."),
-            Length(min=10, max=1000, message="Повідомлення має бути від 10 до 1000 символів."),
+            Length(
+                max=500,
+                message="Повідомлення не повинно перевищувати 500 символів.",
+            ),
         ],
     )
-    agree = BooleanField("Я погоджуюсь з обробкою персональних даних")
     submit = SubmitField("Відправити")
 
 

@@ -12,19 +12,14 @@
 
         {{ render_field(form.name) }}
         {{ render_field(form.email) }}
+        {{ render_field(form.phone) }}
+        {{ render_field(form.subject) }}
         {{ render_field(form.message) }}
-
-        <div class="mb-3 form-check">
-            {{ form.agree(class="form-check-input", id="agree") }}
-            <label class="form-check-label" for="agree">
-                Я погоджуюсь з обробкою персональних даних
-            </label>
-        </div>
 
         {{ form.submit(class="btn btn-primary") }}
     </form>
 
-    {# Пункт 8**: дані з форми у вигляді таблиці разом із формою (після PRG) #}
+    {# Дані з форми у вигляді таблиці разом із формою #}
     {% if contact_data %}
     <div class="card card-body">
         <h2 class="h5 mb-3">Останнє відправлене повідомлення</h2>
@@ -40,12 +35,16 @@
                         <td>{{ contact_data.email }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Повідомлення</th>
-                        <td style="white-space: pre-wrap;">{{ contact_data.message }}</td>
+                        <th scope="row">Телефон</th>
+                        <td>{{ contact_data.phone }}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Погодження</th>
-                        <td>{{ "Так" if contact_data.agree else "Ні" }}</td>
+                        <th scope="row">Тема</th>
+                        <td>{{ contact_data.subject }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Повідомлення</th>
+                        <td style="white-space: pre-wrap;">{{ contact_data.message }}</td>
                     </tr>
                 </tbody>
             </table>

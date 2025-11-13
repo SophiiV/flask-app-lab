@@ -1,7 +1,16 @@
-from flask import Blueprint, render_template, url_for, redirect, flash, session
+import logging
+from flask import Blueprint, render_template, url_for, redirect, flash, session, request
 from .forms import ContactForm
 
 main_bp = Blueprint("main", __name__)
+
+# простеньке логування у файл contact.log в корені проєкту
+logging.basicConfig(
+    filename="contact.log",
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    encoding="utf-8",
+)
 
 
 @main_bp.route("/")
@@ -18,21 +27,42 @@ def resume():
 def contacts():
     form = ContactForm()
 
-    # Дані останньої відправленої форми (для таблиці)
+    # даані останньої успішно відправленої форми
     contact_data = session.get("contact_data")
 
     if form.validate_on_submit():
-        # Зберігаємо дані в сесію (для відображення у вигляді таблиці після redirect)
-        session["contact_data"] = {
+        data = {
             "name": form.name.data,
             "email": form.email.data,
+            "phone": form.phone.data,
+            "subject": form.subject.data,
             "message": form.message.data,
-            "agree": form.agree.data,
         }
 
-        flash("Повідомлення успішно відправлено.", "success")
-        # Post/Redirect/Get
+        # лог-файл
+        logging.info(
+            "Contact form submitted: name=%s, email=%s, phone=%s, subject=%s",
+            data["name"],
+            data["email"],
+            data["phone"],
+            data["subject"],
+        )
+
+        # зберегти в сесію для таблиці
+        session["contact_data"] = data
+
+        # flash з name + email
+        flash(
+            f"Повідомлення від {data['name']} <{data['email']}> успішно надіслано.",
+            "success",
+        )
+
+        # PRG
         return redirect(url_for("main.contacts"))
+
+    #  валідація не пройшла
+    if request.method == "POST" and not form.validate():
+        flash("Форма містить помилки. Перевірте введені дані.", "error")
 
     return render_template(
         "contacts.html",
