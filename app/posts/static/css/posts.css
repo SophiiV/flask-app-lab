@@ -1,0 +1,9 @@
+.post-card img {
+    object-fit: cover;
+    height: 180px;
+}
+
+.post-card .card-body {
+    display: flex;
+    flex-direction: column;
+}

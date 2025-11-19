@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<article class="mb-4">
+    <h1>{{ post.title }}</h1>
+    <p class="text-muted">
+        {{ post.category }} |
+        {{ post.posted.strftime('%Y-%m-%d %H:%M') }} |
+        by {{ post.author }}
+        {% if not post.is_active %}
+            <span class="badge bg-secondary">inactive</span>
+        {% endif %}
+    </p>
+    <p>{{ post.content }}</p>
+</article>
+
+<div class="d-flex gap-2">
+    <a href="{{ url_for('posts.update_post', id=post.id) }}"
+       class="btn btn-warning">Edit</a>
+    <a href="{{ url_for('posts.delete_post', id=post.id) }}"
+       class="btn btn-danger">Delete</a>
+    <a href="{{ url_for('posts.list_posts') }}" class="btn btn-secondary">Back</a>
+</div>
+{% endblock %}

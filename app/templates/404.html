@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Page not found{% endblock %}
+
+{% block content %}
+<div class="text-center mt-5">
+    <h1 class="display-4">404</h1>
+    <p class="lead">Requested page is not available.</p>
+    <a href="{{ url_for('posts.list_posts') }}" class="btn btn-primary">
+        Back to home
+    </a>
+</div>
+{% endblock %}
