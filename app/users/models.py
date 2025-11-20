@@ -2,6 +2,7 @@ from app import db
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String
 
+
 class User(db.Model):
     __tablename__ = "users"
 
@@ -10,8 +11,12 @@ class User(db.Model):
     email: Mapped[str] = mapped_column(String(120), nullable=False, unique=True)
     password: Mapped[str] = mapped_column(String(255), nullable=False)
 
-    # тут звʼязок 1–N з Post
-    posts = relationship("Post", back_populates="author_obj")
+    # 1:N – один користувач має багато постів
+    posts: Mapped[list["Post"]] = relationship(
+        "Post",
+        back_populates="author_obj",
+        cascade="all, delete-orphan",
+    )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"<User {self.username}>"

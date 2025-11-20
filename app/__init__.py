@@ -6,7 +6,6 @@ from flask_migrate import Migrate
 
 from .config import config_map
 
-
 db = SQLAlchemy()
 migrate = Migrate()
 
@@ -20,23 +19,22 @@ def create_app(config_name: str | None = None) -> Flask:
 
     app.config.from_object(config_map[config_name])
 
-
     db.init_app(app)
     migrate.init_app(app, db)
 
+    with app.app_context():
+        from app.users import models as user_models  #
+        from app.posts import models as post_models  
 
     from .posts import bp as posts_bp
-
     app.register_blueprint(posts_bp)
-
 
     @app.route("/")
     def index():
         return redirect(url_for("posts.list_posts"))
 
-
     @app.errorhandler(404)
-    def page_not_found(error):  # noqa: ARG001
+    def page_not_found(error):
         return render_template("404.html"), 404
 
     return app

@@ -1,34 +1,21 @@
-from datetime import datetime
-
 from flask_wtf import FlaskForm
 from wtforms import (
     StringField,
     TextAreaField,
-    BooleanField,
-    DateTimeLocalField,
-    SelectField,
     SubmitField,
+    SelectField,
+    SelectMultipleField,
 )
-from wtforms.validators import DataRequired, Length
+from wtforms.validators import DataRequired
+
+from app.users.models import User
+from app.posts.models import Tag
 
 
 class PostForm(FlaskForm):
-    """Form for creating and editing posts."""
+    title = StringField("Title", validators=[DataRequired()])
+    content = TextAreaField("Content", validators=[DataRequired()])
 
-    title = StringField(
-        "Title",
-        validators=[DataRequired(), Length(min=3, max=150)],
-    )
-    content = TextAreaField(
-        "Content",
-        validators=[DataRequired(), Length(min=10)],
-    )
-    enabled = BooleanField("Active", default=True)
-    publish_date = DateTimeLocalField(
-        "Publish at",
-        format="%Y-%m-%dT%H:%M",
-        default=datetime.utcnow,
-    )
     category = SelectField(
         "Category",
         choices=[
@@ -39,4 +26,20 @@ class PostForm(FlaskForm):
         ],
         validators=[DataRequired()],
     )
+
+    author_id = SelectField("Author", coerce=int)
+
+    tags = SelectMultipleField("Tags", coerce=int)
+
     submit = SubmitField("Save")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # автори з БД
+        self.author_id.choices = [
+            (u.id, u.username) for u in User.query.order_by(User.id)
+        ]
+
+        # теги з БД
+        self.tags.choices = [(t.id, t.name) for t in Tag.query.order_by(Tag.name)]
