@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Account{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <!-- Profile picture and metadata -->
+    <div class="col-md-4 text-center">
+      <img
+        src="{{ url_for('static', filename='profile_pics/' + current_user.image) }}"
+        alt="Profile picture"
+        class="img-thumbnail mb-3"
+        style="max-width: 150px;"
+      >
+      <p><strong>Last seen:</strong> {{ current_user.last_seen.strftime('%Y-%m-%d %H:%M:%S') if current_user.last_seen }}</p>
+    </div>
+    <!-- User information and update form -->
+    <div class="col-md-8">
+      <h2>Your Profile</h2>
+      <p><strong>Username:</strong> {{ current_user.username }}</p>
+      <p><strong>Email:</strong> {{ current_user.email }}</p>
+      {% if current_user.about_me %}
+        <p><strong>About me:</strong> {{ current_user.about_me }}</p>
+      {% endif %}
+      <hr>
+      <h3>Update your information</h3>
+      <form method="post" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.username.label(class="form-label") }}
+          {{ form.username(class="form-control") }}
+          {% for error in form.username.errors %}
+            <small class="text-danger">{{ error }}</small>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.email.label(class="form-label") }}
+          {{ form.email(class="form-control") }}
+          {% for error in form.email.errors %}
+            <small class="text-danger">{{ error }}</small>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.about_me.label(class="form-label") }}
+          {{ form.about_me(class="form-control", rows=3) }}
+          {% for error in form.about_me.errors %}
+            <small class="text-danger">{{ error }}</small>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.picture.label(class="form-label") }}
+          {{ form.picture(class="form-control-file") }}
+          {% for error in form.picture.errors %}
+            <small class="text-danger">{{ error }}</small>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.submit(class="btn btn-primary") }}
+        </div>
+      </form>
+      <hr>
+      <p>
+        <a href="{{ url_for('change_password') }}" class="btn btn-link">Change password</a>
+      </p>
+    </div>
+  </div>
+{% endblock %}
